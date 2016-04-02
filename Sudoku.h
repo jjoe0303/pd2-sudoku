@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include <stdio.h>
 
 using namespace std;
 
@@ -18,6 +19,9 @@ class Sudoku{
 		void transform();
 		void change();
 		void printOut(bool isAns);
+		void testprint();
 		static const int Sudokusize=81;
 	private:
 		int map[Sudokusize];
+		int ans[Sudokusize];
+};
