@@ -28,10 +28,10 @@ void Sudoku::giveQuestion(){
 void Sudoku::changeNum(int a,int b){
 	for(int i=0;i<Sudokusize;++i){
 		if(map[i]==a){
-			map[i]=b; //just chage a&b 's position
+			map[i]=b;continue; //just chage a&b 's position
 		}
 		if(map[i]==b){
-			map[i]=a;
+			map[i]=a;continue;
 		}
 	}
 }
