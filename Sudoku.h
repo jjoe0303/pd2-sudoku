@@ -20,8 +20,13 @@ class Sudoku{
 		void change();
 		void printOut(bool isAns);
 		void testprint();
+		bool isPlace(int count);
+		void backtrace(int count);
+
 		static const int Sudokusize=81;
 	private:
 		int map[Sudokusize];
 		int ans[Sudokusize];
+		bool checkunity(int arr[]);
+		int board[9][9];
 };

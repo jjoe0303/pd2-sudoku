@@ -226,3 +226,60 @@ void Sudoku::testprint(){
 }
 
 
+bool Sudoku::isPlace(int count){
+	int row=count/9;
+	int col=count%9;
+	int i,j;
+	
+	for(i=0;i<9;++i){
+		if(board[row][i]==board[row][col] && i!=col){ //check row
+			return false;
+		}
+	}
+
+	for(i=0;i<9;++i){
+		if(board[i][col]==board[row][col] && i!=row){ //check column
+			reutrn false;
+		}
+	}
+
+	int tmprow=row/3*3;
+	int tmpcol=col/3*3;
+	for(i=tmprow;i<tmprow+3;++i){
+		for(j=tmpcol;j<tmpcol+3;++j){
+			if(board[i][j]==board[row][col] && i!=row && j!=col){
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+void Sudoku::backtrace(int count){
+	if(count==81){
+		return;
+	}
+
+	int row=count/9;
+	int col=count%9;
+	if(board[row][col]==0){
+		for(int i=1;i<=9;i++){
+			board[row][col]=i;   //give value
+			if(isPlace(count)){   //this position ok
+				backtrace(count+1);  //next position
+			}
+		}
+		board[row][col]=0; //back
+	}
+
+	else{
+		backtrace(count+1);
+	}
+}
+
+void Sudoku
+
+
+	
+
+
