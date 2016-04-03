@@ -3,7 +3,7 @@
 #include <ctime>
 #include <string>
 #include <stdio.h>
-
+#include <algorithm>
 using namespace std;
 
 class Sudoku{
@@ -18,15 +18,16 @@ class Sudoku{
 		void flip(int n);
 		void transform();
 		void change();
-		void printOut(bool isAns);
+		void printOut();
 		void testprint();
 		bool isPlace(int count);
 		void backtrace(int count);
-
+		void checkzero();
 		static const int Sudokusize=81;
 	private:
 		int map[Sudokusize];
-		int ans[Sudokusize];
+		int ans[9][9];
 		bool checkunity(int arr[]);
 		int board[9][9];
+		int times;
 };

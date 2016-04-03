@@ -191,11 +191,10 @@ void Sudoku::flip(int n){
 	}
 }
 
-/*void Sudoku::transform(){
-	readIn();
+void Sudoku::transform(){
 	change();
-	printOut(false);
-}*/
+	printOut();
+}
 
 void Sudoku::change(){
 	srand(time(NULL));
@@ -219,7 +218,7 @@ void Sudoku::change(){
 		}
 }*/
 
-void Sudoku::testprint(){
+void Sudoku::printOut(){
 	for(int i=0;i<81;++i){
 		printf("%d%c",map[i],(i+1)%9==0?'\n':' ');
 	}
@@ -239,7 +238,7 @@ bool Sudoku::isPlace(int count){
 
 	for(i=0;i<9;++i){
 		if(board[i][col]==board[row][col] && i!=row){ //check column
-			reutrn false;
+			return false;
 		}
 	}
 
@@ -247,7 +246,7 @@ bool Sudoku::isPlace(int count){
 	int tmpcol=col/3*3;
 	for(i=tmprow;i<tmprow+3;++i){
 		for(j=tmpcol;j<tmpcol+3;++j){
-			if(board[i][j]==board[row][col] && i!=row && j!=col){
+			if(board[i][j]==board[row][col] && i!=row && j!=col){  //check mesh
 				return false;
 			}
 		}
@@ -256,14 +255,23 @@ bool Sudoku::isPlace(int count){
 }
 
 void Sudoku::backtrace(int count){
+	if(times<0){return;}
+	if(times>1){return;}
 	if(count==81){
+		++times;
+		if(times>1){return;}	
+		for(int i=0;i<9;i++){
+			for(int j=0;j<9;j++){
+				ans[i][j]=board[i][j];
+			}
+		}
 		return;
 	}
 
 	int row=count/9;
 	int col=count%9;
 	if(board[row][col]==0){
-		for(int i=1;i<=9;i++){
+		for(int i=1;i<=9;++i){
 			board[row][col]=i;   //give value
 			if(isPlace(count)){   //this position ok
 				backtrace(count+1);  //next position
@@ -277,9 +285,54 @@ void Sudoku::backtrace(int count){
 	}
 }
 
-void Sudoku
+void Sudoku::solve(){
+	times=0;
+        for(int i=0;i<81;++i){
+                board[i/9][i%9]=map[i]; //1D to 2D
+        }
+	checkzero();
+	backtrace(0); //solve
+	if(times<=0){cout<<'0'<<endl; return;};
+	if(times>1) {cout<<'2'<<endl; return;};
+	cout<<times<<endl;
+	for(int i=0;i<9;++i){
+		for(int j=0;j<9;++j){
+			cout<<ans[i][j]<<" ";
+		}
+		cout<<endl;
+	}
 
+/*	for(int i=0;i<9;++i){
+		for(int j=0;j<9;++j){
+			ans[9*i+j]=board[i][j]; //remain answer in ans[ ]
+		}
+	}*/
 
+/*	for(int i=0;i<9;++i){
+		for(int j=0;j<9;++j){
+			cout<<board[i][j]<<" ";
+		}
+	cout<<endl;
+}*/
+
+/*	for(int i=0;i<81;++i){
+		printf("%d%c",ans[i],(i+1)%9==0?'\n':' '); //print it out
+
+	}*/
+}	
+
+void Sudoku::checkzero(){
+	int zero=0;
+	for(int i=0;i<81;++i){
+		if(map[i]==0){ ++zero;}
+	}
+	if(zero==0){return;}
+	for(int i=0;i<81;++i){
+		if(map[i]!=0){	
+			if(isPlace(i)) {continue;}	
+			else {times=-1;return;}
+		}
+	if(zero>77){times=2;}
+	}
+}
 	
-
-
